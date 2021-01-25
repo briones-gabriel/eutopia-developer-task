@@ -93,7 +93,6 @@ export default {
       this.selectedIndustries = results[1];
       this.fromDate = results[2];
       this.toDate = results[3];
-      console.log(this.selectedIndustries.length);
     },
   },
   computed: {
