@@ -13,10 +13,11 @@
         >
           Advanced Filter
         </v-btn>
+        <!--Results that are showed only when the user has selected something-->
         <v-container>
           <br />
           <v-row class="d-flex justify-center">
-            <!--Industries & Tags-->
+            <!--Industries & Tags section where results from the TextInput are showed-->
             <v-col v-if="checkForTags" cols="4">
               <h4 class="text-h5">Industries & Tags selected</h4>
               <v-container>
@@ -33,7 +34,7 @@
                 </v-chip-group>
               </v-container>
             </v-col>
-            <!--Industries-->
+            <!--Industries section where results from checkboxes are showed-->
             <v-col v-if="checkForIndustries" cols="4">
               <h4 class="text-h5">Industries selected</h4>
               <v-container>
@@ -50,7 +51,7 @@
                 </v-chip-group>
               </v-container>
             </v-col>
-            <!--Calendar Dates-->
+            <!--Calendar Dates section where the selected dates are showed-->
             <v-col v-if="checkForDates" cols="4">
               <h4 class="text-h5">Calendar dates selected</h4>
               <v-container>
@@ -62,6 +63,7 @@
           </v-row>
         </v-container>
       </v-main>
+      <!--Advanced Filter Modal (dinamically shown)-->
       <AdvancedFilterModal
         :showModal="showModal"
         :toggleAdvancedFilter="toggleAdvancedFilter"
@@ -85,9 +87,11 @@ export default {
     toDate: null,
   }),
   methods: {
+    // Method to change the modal visibility
     toggleAdvancedFilter() {
       this.showModal = !this.showModal;
     },
+    // Method used to pass the data from the Modal component to the main page
     displayResults(results) {
       this.selectedTags = results[0];
       this.selectedIndustries = results[1];
@@ -96,6 +100,8 @@ export default {
     },
   },
   computed: {
+    /* Computed methods used to dinamically toggle the visibility
+    of the diferent results */
     checkForDates() {
       return true ? this.fromDate && this.toDate : false;
     },

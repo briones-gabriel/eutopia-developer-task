@@ -7,7 +7,7 @@
       persistent
       @click:outside="toggleAdvancedFilter"
     >
-      <!--Main Card-->
+      <!--Main Card that will act as background for the modal-->
       <v-card>
         <!--Tabs-->
         <v-tabs
@@ -17,14 +17,15 @@
           light
         >
           <v-tab disabled>Overview</v-tab>
-          <v-tab href="#sector">Sector</v-tab>
           <!--Sector Tab-->
+          <v-tab href="#sector">Sector</v-tab>
           <v-tab-item value="sector">
             <!--Industries & Tags section-->
             <v-container>
               <h3>INDUSTRIES & TAGS</h3>
               <v-divider></v-divider>
               <br />
+              <!--Autocomplete component used to help with the selection of tags-->
               <v-autocomplete
                 outlined
                 clearable
@@ -76,7 +77,7 @@
               <v-divider></v-divider>
               <br />
               <v-row>
-                <!--Date picker (from date)-->
+                <!--Date picker (from)-->
                 <v-col cols="3">
                   <v-menu
                     offset-y
@@ -84,10 +85,9 @@
                     v-model="fromDateMenu"
                     return-value.sync="fromDate"
                     transition="scale-transition"
-                    :close-on-content-click="false"
                     min-width="auto"
                   >
-                    <!--Text input to display the information-->
+                    <!--Text input to display the date information-->
                     <template v-slot:activator="{ on }">
                       <v-text-field
                         readonly
@@ -101,7 +101,7 @@
                     <v-date-picker v-model="fromDate" no-title></v-date-picker>
                   </v-menu>
                 </v-col>
-                <!--Date picker (to date)-->
+                <!--Date picker (to)-->
                 <v-col cols="3">
                   <v-menu
                     offset-y
@@ -109,10 +109,9 @@
                     v-model="toDateMenu"
                     return-value.sync="toDate"
                     transition="scale-transition"
-                    :close-on-content-click="false"
                     min-width="auto"
                   >
-                    <!--Text input to display the information-->
+                    <!--Text input to display the date information-->
                     <template v-slot:activator="{ on }">
                       <v-text-field
                         readonly
@@ -137,7 +136,7 @@
         <v-divider></v-divider>
         <!--Buttons-->
         <v-container class="text-right">
-          <!--Apply-->
+          <!--Apply button-->
           <v-btn
             elevation="0"
             color="green lighten-1"
@@ -146,11 +145,11 @@
           >
             Apply
           </v-btn>
-          <!--Clear all-->
+          <!--Clear all button-->
           <v-btn outlined color="grey" class="mx-4" @click="clearAll">
             Clear all
           </v-btn>
-          <!--Cancel-->
+          <!--Cancel button-->
           <v-btn text plain @click="toggleAdvancedFilter"> Cancel </v-btn>
         </v-container>
       </v-card>
@@ -164,8 +163,8 @@ export default {
   props: ["showModal", "toggleAdvancedFilter"],
   data: () => ({
     fromDate: null,
-    toDate: null,
     fromDateMenu: false,
+    toDate: null,
     toDateMenu: false,
     selectedTags: [],
     selectedIndustries: [],
@@ -210,7 +209,7 @@ export default {
   }),
   methods: {
     apply() {
-      // Emit variables and exit
+      // "$emit" event to pass the data to the parent component and exit afterwards
       this.$emit("apply", [
         this.selectedTags,
         this.selectedIndustries,
@@ -220,7 +219,7 @@ export default {
       this.toggleAdvancedFilter();
     },
     clearAll() {
-      // Clear all variable and emit to save them
+      // Clear all variable and "$emit" to save them
       this.selectedTags = [];
       this.selectedIndustries = [];
       this.fromDate = null;
@@ -234,12 +233,10 @@ export default {
     },
   },
   computed: {
+    // Computed method to sort the tags to display
     sortedTagOptions() {
       return this.tagOptions.sort();
     },
   },
 };
 </script>
-
-<style>
-</style>
